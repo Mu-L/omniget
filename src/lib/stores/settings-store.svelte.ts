@@ -45,6 +45,7 @@ export type AppSettings = {
     stagger_delay_ms: number;
     torrent_listen_port: number;
     cookies_from_browser: string;
+    twitter_manual_cookie: string;
   };
   telegram: {
     concurrent_downloads: number;

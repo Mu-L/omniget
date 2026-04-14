@@ -168,6 +168,8 @@
   let proxyUsername = $state("");
   let proxyPassword = $state("");
   let proxyTimer = $state<ReturnType<typeof setTimeout> | null>(null);
+  let twitterManualCookieInput = $state("");
+  let twitterManualCookieTimer = $state<ReturnType<typeof setTimeout> | null>(null);
 
   $effect(() => {
     if (settings) {
@@ -176,6 +178,7 @@
       proxyHost = settings.proxy?.host ?? "";
       proxyUsername = settings.proxy?.username ?? "";
       proxyPassword = settings.proxy?.password ?? "";
+      twitterManualCookieInput = settings.advanced?.twitter_manual_cookie ?? "";
     }
   });
 
@@ -272,6 +275,15 @@
     if (proxyTimer) clearTimeout(proxyTimer);
     proxyTimer = setTimeout(async () => {
       await updateSettings({ proxy: { password: value } });
+    }, 800);
+  }
+
+  function handleTwitterManualCookieInput(e: Event) {
+    const value = (e.target as HTMLTextAreaElement).value;
+    twitterManualCookieInput = value;
+    if (twitterManualCookieTimer) clearTimeout(twitterManualCookieTimer);
+    twitterManualCookieTimer = setTimeout(async () => {
+      await updateSettings({ advanced: { twitter_manual_cookie: value.trim() } });
     }, 800);
   }
 
@@ -947,6 +959,21 @@
           />
         </div>
         <div class="divider"></div>
+        <div class="setting-row template-row">
+          <div class="setting-col">
+            <span class="setting-label">{$t('settings.advanced.twitter_manual_cookie')}</span>
+            <span class="setting-path">{$t('settings.advanced.twitter_manual_cookie_desc')}</span>
+          </div>
+          <textarea
+            class="input-textarea"
+            rows="3"
+            placeholder="sessionid=...; csrftoken=...; auth_token=..."
+            value={twitterManualCookieInput}
+            oninput={handleTwitterManualCookieInput}
+            spellcheck="false"
+          ></textarea>
+        </div>
+        <div class="divider"></div>
         <div class="setting-row">
           <div class="setting-col">
             <span class="setting-label">{$t('debug.enable')}</span>
@@ -1401,6 +1428,25 @@
     border: 1px solid var(--input-border);
   }
   .input-text:focus-visible {
+    border-color: var(--blue);
+    outline: none;
+  }
+
+  .input-textarea {
+    width: 100%;
+    min-height: 76px;
+    resize: vertical;
+    padding: calc(var(--padding) / 2);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+    background: var(--button-elevated);
+    border-radius: calc(var(--border-radius) / 2);
+    color: var(--secondary);
+    border: 1px solid var(--input-border);
+  }
+
+  .input-textarea:focus-visible {
     border-color: var(--blue);
     outline: none;
   }

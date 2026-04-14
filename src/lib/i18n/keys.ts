@@ -463,6 +463,8 @@ export type TranslationKeys =
   | 'settings.advanced.title'
   | 'settings.advanced.torrent_listen_port'
   | 'settings.advanced.torrent_listen_port_desc'
+  | 'settings.advanced.twitter_manual_cookie'
+  | 'settings.advanced.twitter_manual_cookie_desc'
   | 'settings.appearance.lang_el'
   | 'settings.appearance.lang_en'
   | 'settings.appearance.lang_fr'
