@@ -91,6 +91,8 @@ pub struct AdvancedSettings {
     pub torrent_listen_port: u16,
     #[serde(default)]
     pub cookies_from_browser: String,
+    #[serde(default)]
+    pub twitter_manual_cookie: String,
 }
 
 fn default_concurrent_fragments() -> u32 {
@@ -199,6 +201,7 @@ impl Default for AppSettings {
                 stagger_delay_ms: 150,
                 torrent_listen_port: 6881,
                 cookies_from_browser: String::new(),
+                twitter_manual_cookie: String::new(),
             },
             telegram: TelegramSettings::default(),
             proxy: ProxySettings::default(),
